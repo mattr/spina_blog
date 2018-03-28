@@ -3,7 +3,7 @@ require 'test_helper'
 class Spina::Admin::PostsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @post = FactoryBot.create(:post)
-    @controller.stubs(:current_spina_user).returns(spina_users(:author))
+    # @controller.stubs(:current_spina_user).returns(@post.author)
   end
 
   test "should get index as blog" do
@@ -28,6 +28,7 @@ class Spina::Admin::PostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create post" do
+    @controller.stubs(:current_spina_user).returns(@post.author)
     post spina.admin_posts_url, params: { post: { title: "Create post", is_draft: true } }
     assert_response :redirect
     follow_redirect!
