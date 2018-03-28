@@ -2,10 +2,11 @@ require 'test_helper'
 
 class Spina::PostTest < ActiveSupport::TestCase
   # fixtures :all
-  set_fixture_class post: Spina::Post
+  # set_fixture_class post: Spina::Post
 
   setup do
-    @post = spina_posts(:valid)
+    # @post = spina_posts(:valid)
+    @post = FactoryBot.create(:post)
   end
 
   test "should require title" do
@@ -15,6 +16,6 @@ class Spina::PostTest < ActiveSupport::TestCase
   end
 
   test "should have an author" do
-    assert_equal @post.author.name, spina_users(:author).name
+    assert_not_nil @post.author.name
   end
 end

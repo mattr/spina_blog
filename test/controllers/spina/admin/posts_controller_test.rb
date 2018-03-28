@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Spina::Admin::PostsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @post = spina_posts(:valid)
+    @post = FactoryBot.create(:post)
     @controller.stubs(:current_spina_user).returns(spina_users(:author))
   end
 

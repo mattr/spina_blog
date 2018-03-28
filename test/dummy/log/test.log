@@ -2244,3 +2244,150 @@ Spina::Admin::PostsControllerTest: test_should_get_edit
 -------------------------------------------------------
   [1m[36mSpina::Post Load (0.1ms)[0m  [1m[34mSELECT  "spina_posts".* FROM "spina_posts" WHERE "spina_posts"."id" = ? LIMIT ?[0m  [["id", 201799169], ["LIMIT", 1]]
   [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.4ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (3.1ms)[0m  [1m[31mDELETE FROM "spina_posts"[0m
+  [1m[36mFixture Insert (1.6ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "published_at", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Test Post', 'Here is some text for the body.', '2018-03-28 00:10:25', 'f', '2018-03-28 06:19:36.676769', '2018-03-28 06:19:36.676769', 201799169, 1034934474)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Draft Post', 'Here is some text for the body.', 't', '2018-03-28 06:19:36.676769', '2018-03-28 06:19:36.676769', 108828309, 1034934474)[0m
+  [1m[36mFixture Delete (1.2ms)[0m  [1m[31mDELETE FROM "spina_users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_users" ("name", "email", "admin", "created_at", "updated_at", "id") VALUES ('Test Author', 'author@example.com', 't', '2018-03-28 06:19:36.687670', '2018-03-28 06:19:36.687670', 1034934474)[0m
+  [1m[36mFixture Delete (1.3ms)[0m  [1m[31mDELETE FROM "spina_tags"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 06:19:36.691028', '2018-03-28 06:19:36.691028', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 06:19:36.691028', '2018-03-28 06:19:36.691028', 298486374)[0m
+  [1m[35m (1.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------
+Spina::PostTest: test_should_have_an_author
+-------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+Spina::PostTest: test_should_require_title
+------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "spina_posts"[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "published_at", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Test Post', 'Here is some text for the body.', '2018-03-28 00:10:25', 'f', '2018-03-28 06:21:06.414330', '2018-03-28 06:21:06.414330', 201799169, 1034934474)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Draft Post', 'Here is some text for the body.', 't', '2018-03-28 06:21:06.414330', '2018-03-28 06:21:06.414330', 108828309, 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_users" ("name", "email", "admin", "created_at", "updated_at", "id") VALUES ('Test Author', 'author@example.com', 't', '2018-03-28 06:21:06.418759', '2018-03-28 06:21:06.418759', 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_tags"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 06:21:06.420638', '2018-03-28 06:21:06.420638', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 06:21:06.420638', '2018-03-28 06:21:06.420638', 298486374)[0m
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------
+Spina::PostTest: test_should_have_an_author
+-------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+Spina::PostTest: test_should_require_title
+------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (1.1ms)[0m  [1m[31mDELETE FROM "spina_posts"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "published_at", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Test Post', 'Here is some text for the body.', '2018-03-28 00:10:25', 'f', '2018-03-28 06:22:39.195463', '2018-03-28 06:22:39.195463', 201799169, 1034934474)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Draft Post', 'Here is some text for the body.', 't', '2018-03-28 06:22:39.195463', '2018-03-28 06:22:39.195463', 108828309, 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_users"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_users" ("name", "email", "admin", "created_at", "updated_at", "id") VALUES ('Test Author', 'author@example.com', 't', '2018-03-28 06:22:39.202119', '2018-03-28 06:22:39.202119', 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_tags"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 06:22:39.204794', '2018-03-28 06:22:39.204794', 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 06:22:39.204794', '2018-03-28 06:22:39.204794', 298486374)[0m
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------
+Spina::PostTest: test_should_have_an_author
+-------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+Spina::PostTest: test_should_require_title
+------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------
+Spina::PostTest: test_should_have_an_author
+-------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+Spina::PostTest: test_should_require_title
+------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------------
+Spina::Admin::PostsControllerTest: test_should_get_edit
+-------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------------------
+Spina::Admin::PostsControllerTest: test_should_get_new
+------------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------------
+Spina::Admin::PostsControllerTest: test_should_update_post
+----------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------------
+Spina::Admin::PostsControllerTest: test_should_create_post
+----------------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------------------
+Spina::Admin::PostsControllerTest: test_should_get_index_as_blog
+----------------------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------------------------
+Spina::Admin::PostsControllerTest: test_should_get_index_as_posts
+-----------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------------
+Spina::Admin::PostsControllerTest: test_should_get_edit
+-------------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------------------
+Spina::Admin::PostsControllerTest: test_should_get_index_as_blog
+----------------------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------------------
+Spina::Admin::PostsControllerTest: test_should_get_new
+------------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------------
+Spina::Admin::PostsControllerTest: test_should_create_post
+----------------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+----------------------------------------------------------
+Spina::Admin::PostsControllerTest: test_should_update_post
+----------------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------------------------
+Spina::Admin::PostsControllerTest: test_should_get_index_as_posts
+-----------------------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m

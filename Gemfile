@@ -14,4 +14,5 @@ gemspec
 # gem 'byebug', group: [:development, :test]
 group :development, :test do
   gem 'mocha'
+  gem 'factory_bot_rails'
 end
