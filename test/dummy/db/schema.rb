@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180327134523) do
+ActiveRecord::Schema.define(version: 20180328123736) do
 
   create_table "spina_accounts", force: :cascade do |t|
     t.string "name"
@@ -164,6 +164,14 @@ ActiveRecord::Schema.define(version: 20180327134523) do
     t.index ["author_id"], name: "index_spina_posts_on_author_id"
   end
 
+  create_table "spina_posts_tags", id: false, force: :cascade do |t|
+    t.integer "post_id"
+    t.integer "tag_id"
+    t.index ["post_id", "tag_id"], name: "index_spina_posts_tags_on_post_id_and_tag_id"
+    t.index ["post_id"], name: "index_spina_posts_tags_on_post_id"
+    t.index ["tag_id"], name: "index_spina_posts_tags_on_tag_id"
+  end
+
   create_table "spina_rewrite_rules", force: :cascade do |t|
     t.string "old_path"
     t.string "new_path"
@@ -227,9 +235,6 @@ ActiveRecord::Schema.define(version: 20180327134523) do
     t.datetime "last_logged_in"
     t.string "password_reset_token"
     t.datetime "password_reset_sent_at"
-  end
-
-  create_table "taggable", force: :cascade do |t|
   end
 
 end

@@ -1,2 +1,30 @@
-%h1 Spina::Admin::Posts#index
-%p Find me in app/views/spina/admin/posts/index.html.haml
+.filters
+  = link_to 'New post', spina.admin_post_path, class: 'button button-primary', data: {icon: 't'}
+
+.table-container
+  %table.table
+    %thead
+      %tr
+        %th Title
+        %th Date
+        %th Draft?
+        %th &nbsp;
+
+    %tbody
+      - if @posts.any?
+        - @posts.each do |post|
+          %tr
+            %td
+              = post.title
+            %td
+              = post.published_at.strftime('%a, %d %b %Y, %I:%M %p')
+            %td
+              = post.is_draft?
+            %td.nowrap.align-right
+              = link_to spina.edit_admin_post_path(post), class: 'button button-link' do
+                = icon('pencil-outline')
+              .pull-right= link_to 'Delete', admin_post_path(post), method: :delete, confirm: 'Are you sure?', class: 'button button-link button-danger'
+      - else
+        %tr
+          %td.align-center{colspan: 3}
+            %em There are no posts

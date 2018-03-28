@@ -1,0 +1,32 @@
+= form_for [:admin, @post], html: { autocomplete: "off" } do |f|
+  #page_content
+    .table-container
+      %table.table.table-form
+        %tr
+          %td Title
+          %td= f.text_field :title
+        %tr
+          %td Body
+          %td= render '/spina/admin/shared/rich_text_field', f: f, field: :body
+        %tr
+          %td Published date
+          %td
+            = f.text_field :publish_date, value: (@post.published_at.strftime("%d-%m-%Y") unless @post.new_record?), class: 'datepicker'
+            = f.time_field :publish_time
+        %tr
+          %td Draft?
+          %td= = f.check_box :is_draft
+
+    %button.button.button-primary{type: 'submit', data: {icon: 'o'}}
+      Save
+  
+    = link_to 'Cancel', admin_blog_path, class: 'button button-link'
+  
+    - unless @post.new_record?
+      .pull-right= link_to 'Delete', admin_post_path(@post), method: :delete, confirm: 'Are you sure?', class: 'button button-link button-danger'
+  
+  
+  
+  
+  
+  
