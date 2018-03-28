@@ -9,14 +9,13 @@ require 'mocha/minitest'
 
 # Minitest::Reporters.use! Minitest::Reporters::DefaultReporter.new
 
-class Minitest::Unit::TestCase
-  include FactoryBot::Syntax::Methods
-end
-
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods
 end
 
+# Rails.root is /test/dummy, and it looks inside here for the definitions, so we
+# need to backtrace to the test directory.
+FactoryBot.definition_file_paths << File.expand_path('../factories', __FILE__)
 FactoryBot.find_definitions
 
 

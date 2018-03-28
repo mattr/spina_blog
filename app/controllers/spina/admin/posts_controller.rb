@@ -37,9 +37,7 @@ module Spina
 
       def destroy
         @post.destroy
-        respond_to do |format|
-          redirect_to admin_blog_path, notice: 'Post was successfully destroyed.'
-        end
+        redirect_to admin_blog_path, notice: 'Post was successfully destroyed.'
       end
 
       private
