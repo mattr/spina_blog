@@ -1,0 +1,2 @@
+module Spina::PostsHelper
+end

@@ -1,0 +1,573 @@
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateSpinaPosts (20180327134025)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "spina_posts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "author_id" integer, "body" text, "published_at" datetime, "is_draft" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_4598bbe4fc"
+FOREIGN KEY ("author_id")
+  REFERENCES "authors" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_spina_posts_on_author_id" ON "spina_posts" ("author_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180327134025"]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateSpinaTags (20180327134044)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "spina_tags" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180327134044"]]
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddTagsToPosts (20180327134057)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "taggable" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180327134057"]]
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateSpinaTables (20180327134518)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_accounts"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "spina_accounts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "address" varchar, "postal_code" varchar, "city" varchar, "phone" varchar, "email" varchar, "preferences" text, "logo" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "kvk_identifier" varchar, "vat_identifier" varchar, "robots_allowed" boolean DEFAULT 'f')[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_attachment_collections"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "spina_attachment_collections" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_attachment_collections_attachments"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "spina_attachment_collections_attachments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "attachment_collection_id" integer, "attachment_id" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_attachments"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "spina_attachments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "file" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_layout_parts"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "spina_layout_parts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "name" varchar, "layout_partable_id" integer, "layout_partable_type" varchar, "created_at" datetime, "updated_at" datetime, "account_id" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_lines"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "spina_lines" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "content" varchar, "created_at" datetime, "updated_at" datetime)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_page_parts"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "spina_page_parts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "page_id" integer, "page_partable_id" integer, "page_partable_type" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_pages"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "spina_pages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "menu_title" varchar, "description" varchar, "show_in_menu" boolean DEFAULT 't', "slug" varchar, "deletable" boolean DEFAULT 't', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "name" varchar, "seo_title" varchar, "skip_to_first_child" boolean DEFAULT 'f', "view_template" varchar, "layout_template" varchar, "draft" boolean DEFAULT 'f', "link_url" varchar, "ancestry" varchar, "position" integer, "materialized_path" varchar, "active" boolean DEFAULT 't')[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_photo_collections"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "spina_photo_collections" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_photo_collections_photos"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "spina_photo_collections_photos" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "photo_collection_id" integer, "photo_id" integer, "position" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_photos"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "spina_photos" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "file" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_structure_items"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "spina_structure_items" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "structure_id" integer, "position" integer, "created_at" datetime, "updated_at" datetime)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_spina_structure_items_on_structure_id" ON "spina_structure_items" ("structure_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_structure_parts"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "spina_structure_parts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "structure_item_id" integer, "structure_partable_id" integer, "structure_partable_type" varchar, "name" varchar, "title" varchar, "created_at" datetime, "updated_at" datetime)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_spina_structure_parts_on_structure_item_id" ON "spina_structure_parts" ("structure_item_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_spina_structure_parts_on_structure_item_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_spina_structure_parts_on_structure_item_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_spina_structure_parts_on_structure_partable_id" ON "spina_structure_parts" ("structure_partable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_structures"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "spina_structures" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime, "updated_at" datetime)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_texts"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "spina_texts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "content" text, "created_at" datetime, "updated_at" datetime)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_users"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "spina_users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "email" varchar, "password_digest" varchar, "admin" boolean DEFAULT 'f', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "last_logged_in" datetime)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_rewrite_rules"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "spina_rewrite_rules" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "old_path" varchar, "new_path" varchar, "created_at" datetime, "updated_at" datetime)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180327134518"]]
+  [1m[35m (6.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateSpinaTranslationTables (20180327134519)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "spina_page_translations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "spina_page_id" integer NOT NULL, "locale" varchar NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "spina_page_translations" ADD "title" varchar[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "spina_page_translations" ADD "menu_title" varchar[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "spina_page_translations" ADD "description" varchar[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "spina_page_translations" ADD "seo_title" varchar[0m
+  [1m[35m (0.1ms)[0m  [1m[35mALTER TABLE "spina_page_translations" ADD "materialized_path" varchar[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_spina_page_translations_on_spina_page_id" ON "spina_page_translations" ("spina_page_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_spina_page_translations_on_spina_page_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_spina_page_translations_on_spina_page_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_spina_page_translations_on_locale" ON "spina_page_translations" ("locale")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "spina_text_translations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "spina_text_id" integer NOT NULL, "locale" varchar NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "spina_text_translations" ADD "content" text[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_spina_text_translations_on_spina_text_id" ON "spina_text_translations" ("spina_text_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_spina_text_translations_on_spina_text_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_spina_text_translations_on_spina_text_id' AND type='index'
+[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_spina_text_translations_on_locale" ON "spina_text_translations" ("locale")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "spina_line_translations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "spina_line_id" integer NOT NULL, "locale" varchar NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mALTER TABLE "spina_line_translations" ADD "content" varchar[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_spina_line_translations_on_spina_line_id" ON "spina_line_translations" ("spina_line_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_spina_line_translations_on_spina_line_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_spina_line_translations_on_spina_line_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_spina_line_translations_on_locale" ON "spina_line_translations" ("locale")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180327134519"]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateSpinaNavigations (20180327134520)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_navigations"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "spina_navigations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, "label" varchar NOT NULL, "auto_add_pages" boolean DEFAULT 'f' NOT NULL, "position" integer DEFAULT 0 NOT NULL, "created_at" datetime, "updated_at" datetime)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_spina_navigations_on_name" ON "spina_navigations" ("name")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "spina_navigation_items"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "spina_navigation_items" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "page_id" integer NOT NULL, "navigation_id" integer NOT NULL, "position" integer DEFAULT 0 NOT NULL, "ancestry" varchar, "created_at" datetime, "updated_at" datetime)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_spina_navigation_items_on_page_id_and_navigation_id" ON "spina_navigation_items" ("page_id", "navigation_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180327134520"]]
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddPasswordResetTokenToSpinaUsers (20180327134521)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "spina_users" ADD "password_reset_token" varchar[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "spina_users" ADD "password_reset_sent_at" datetime[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180327134521"]]
+  [1m[35m (1.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to RemoveTranslatedColumns (20180327134522)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aspina_lines" ("id" integer NOT NULL PRIMARY KEY, "content" varchar DEFAULT NULL, "created_at" datetime DEFAULT NULL, "updated_at" datetime DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aspina_lines" ("id","content","created_at","updated_at")
+                     SELECT "id","content","created_at","updated_at" FROM "spina_lines"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE "spina_lines"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "spina_lines" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime DEFAULT NULL, "updated_at" datetime DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "spina_lines" ("id","created_at","updated_at")
+                     SELECT "id","created_at","updated_at" FROM "aspina_lines"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aspina_lines"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aspina_texts" ("id" integer NOT NULL PRIMARY KEY, "content" text DEFAULT NULL, "created_at" datetime DEFAULT NULL, "updated_at" datetime DEFAULT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "aspina_texts" ("id","content","created_at","updated_at")
+                     SELECT "id","content","created_at","updated_at" FROM "spina_texts"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "spina_texts"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "spina_texts" ("id" integer NOT NULL PRIMARY KEY, "created_at" datetime DEFAULT NULL, "updated_at" datetime DEFAULT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "spina_texts" ("id","created_at","updated_at")
+                     SELECT "id","created_at","updated_at" FROM "aspina_texts"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aspina_texts"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aspina_pages" ("id" integer NOT NULL PRIMARY KEY, "title" varchar DEFAULT NULL, "menu_title" varchar DEFAULT NULL, "description" varchar DEFAULT NULL, "show_in_menu" boolean DEFAULT 't', "slug" varchar DEFAULT NULL, "deletable" boolean DEFAULT 't', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "name" varchar DEFAULT NULL, "seo_title" varchar DEFAULT NULL, "skip_to_first_child" boolean DEFAULT 'f', "view_template" varchar DEFAULT NULL, "layout_template" varchar DEFAULT NULL, "draft" boolean DEFAULT 'f', "link_url" varchar DEFAULT NULL, "ancestry" varchar DEFAULT NULL, "position" integer DEFAULT NULL, "materialized_path" varchar DEFAULT NULL, "active" boolean DEFAULT 't')[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aspina_pages" ("id","title","menu_title","description","show_in_menu","slug","deletable","created_at","updated_at","name","seo_title","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active")
+                     SELECT "id","title","menu_title","description","show_in_menu","slug","deletable","created_at","updated_at","name","seo_title","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active" FROM "spina_pages"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "spina_pages"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "spina_pages" ("id" integer NOT NULL PRIMARY KEY, "menu_title" varchar DEFAULT NULL, "description" varchar DEFAULT NULL, "show_in_menu" boolean DEFAULT 't', "slug" varchar DEFAULT NULL, "deletable" boolean DEFAULT 't', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "name" varchar DEFAULT NULL, "seo_title" varchar DEFAULT NULL, "skip_to_first_child" boolean DEFAULT 'f', "view_template" varchar DEFAULT NULL, "layout_template" varchar DEFAULT NULL, "draft" boolean DEFAULT 'f', "link_url" varchar DEFAULT NULL, "ancestry" varchar DEFAULT NULL, "position" integer DEFAULT NULL, "materialized_path" varchar DEFAULT NULL, "active" boolean DEFAULT 't')[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "spina_pages" ("id","menu_title","description","show_in_menu","slug","deletable","created_at","updated_at","name","seo_title","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active")
+                     SELECT "id","menu_title","description","show_in_menu","slug","deletable","created_at","updated_at","name","seo_title","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active" FROM "aspina_pages"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "aspina_pages"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aspina_pages" ("id" integer NOT NULL PRIMARY KEY, "menu_title" varchar DEFAULT NULL, "description" varchar DEFAULT NULL, "show_in_menu" boolean DEFAULT 't', "slug" varchar DEFAULT NULL, "deletable" boolean DEFAULT 't', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "name" varchar DEFAULT NULL, "seo_title" varchar DEFAULT NULL, "skip_to_first_child" boolean DEFAULT 'f', "view_template" varchar DEFAULT NULL, "layout_template" varchar DEFAULT NULL, "draft" boolean DEFAULT 'f', "link_url" varchar DEFAULT NULL, "ancestry" varchar DEFAULT NULL, "position" integer DEFAULT NULL, "materialized_path" varchar DEFAULT NULL, "active" boolean DEFAULT 't')[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "aspina_pages" ("id","menu_title","description","show_in_menu","slug","deletable","created_at","updated_at","name","seo_title","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active")
+                     SELECT "id","menu_title","description","show_in_menu","slug","deletable","created_at","updated_at","name","seo_title","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active" FROM "spina_pages"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "spina_pages"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "spina_pages" ("id" integer NOT NULL PRIMARY KEY, "description" varchar DEFAULT NULL, "show_in_menu" boolean DEFAULT 't', "slug" varchar DEFAULT NULL, "deletable" boolean DEFAULT 't', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "name" varchar DEFAULT NULL, "seo_title" varchar DEFAULT NULL, "skip_to_first_child" boolean DEFAULT 'f', "view_template" varchar DEFAULT NULL, "layout_template" varchar DEFAULT NULL, "draft" boolean DEFAULT 'f', "link_url" varchar DEFAULT NULL, "ancestry" varchar DEFAULT NULL, "position" integer DEFAULT NULL, "materialized_path" varchar DEFAULT NULL, "active" boolean DEFAULT 't')[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "spina_pages" ("id","description","show_in_menu","slug","deletable","created_at","updated_at","name","seo_title","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active")
+                     SELECT "id","description","show_in_menu","slug","deletable","created_at","updated_at","name","seo_title","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active" FROM "aspina_pages"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "aspina_pages"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aspina_pages" ("id" integer NOT NULL PRIMARY KEY, "description" varchar DEFAULT NULL, "show_in_menu" boolean DEFAULT 't', "slug" varchar DEFAULT NULL, "deletable" boolean DEFAULT 't', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "name" varchar DEFAULT NULL, "seo_title" varchar DEFAULT NULL, "skip_to_first_child" boolean DEFAULT 'f', "view_template" varchar DEFAULT NULL, "layout_template" varchar DEFAULT NULL, "draft" boolean DEFAULT 'f', "link_url" varchar DEFAULT NULL, "ancestry" varchar DEFAULT NULL, "position" integer DEFAULT NULL, "materialized_path" varchar DEFAULT NULL, "active" boolean DEFAULT 't')[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aspina_pages" ("id","description","show_in_menu","slug","deletable","created_at","updated_at","name","seo_title","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active")
+                     SELECT "id","description","show_in_menu","slug","deletable","created_at","updated_at","name","seo_title","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active" FROM "spina_pages"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "spina_pages"[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "spina_pages" ("id" integer NOT NULL PRIMARY KEY, "show_in_menu" boolean DEFAULT 't', "slug" varchar DEFAULT NULL, "deletable" boolean DEFAULT 't', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "name" varchar DEFAULT NULL, "seo_title" varchar DEFAULT NULL, "skip_to_first_child" boolean DEFAULT 'f', "view_template" varchar DEFAULT NULL, "layout_template" varchar DEFAULT NULL, "draft" boolean DEFAULT 'f', "link_url" varchar DEFAULT NULL, "ancestry" varchar DEFAULT NULL, "position" integer DEFAULT NULL, "materialized_path" varchar DEFAULT NULL, "active" boolean DEFAULT 't')[0m
+  [1m[35m (0.3ms)[0m  [1m[32mINSERT INTO "spina_pages" ("id","show_in_menu","slug","deletable","created_at","updated_at","name","seo_title","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active")
+                     SELECT "id","show_in_menu","slug","deletable","created_at","updated_at","name","seo_title","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active" FROM "aspina_pages"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "aspina_pages"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aspina_pages" ("id" integer NOT NULL PRIMARY KEY, "show_in_menu" boolean DEFAULT 't', "slug" varchar DEFAULT NULL, "deletable" boolean DEFAULT 't', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "name" varchar DEFAULT NULL, "seo_title" varchar DEFAULT NULL, "skip_to_first_child" boolean DEFAULT 'f', "view_template" varchar DEFAULT NULL, "layout_template" varchar DEFAULT NULL, "draft" boolean DEFAULT 'f', "link_url" varchar DEFAULT NULL, "ancestry" varchar DEFAULT NULL, "position" integer DEFAULT NULL, "materialized_path" varchar DEFAULT NULL, "active" boolean DEFAULT 't')[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "aspina_pages" ("id","show_in_menu","slug","deletable","created_at","updated_at","name","seo_title","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active")
+                     SELECT "id","show_in_menu","slug","deletable","created_at","updated_at","name","seo_title","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active" FROM "spina_pages"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "spina_pages"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "spina_pages" ("id" integer NOT NULL PRIMARY KEY, "show_in_menu" boolean DEFAULT 't', "slug" varchar DEFAULT NULL, "deletable" boolean DEFAULT 't', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "name" varchar DEFAULT NULL, "skip_to_first_child" boolean DEFAULT 'f', "view_template" varchar DEFAULT NULL, "layout_template" varchar DEFAULT NULL, "draft" boolean DEFAULT 'f', "link_url" varchar DEFAULT NULL, "ancestry" varchar DEFAULT NULL, "position" integer DEFAULT NULL, "materialized_path" varchar DEFAULT NULL, "active" boolean DEFAULT 't')[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "spina_pages" ("id","show_in_menu","slug","deletable","created_at","updated_at","name","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active")
+                     SELECT "id","show_in_menu","slug","deletable","created_at","updated_at","name","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active" FROM "aspina_pages"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aspina_pages"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aspina_pages" ("id" integer NOT NULL PRIMARY KEY, "show_in_menu" boolean DEFAULT 't', "slug" varchar DEFAULT NULL, "deletable" boolean DEFAULT 't', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "name" varchar DEFAULT NULL, "skip_to_first_child" boolean DEFAULT 'f', "view_template" varchar DEFAULT NULL, "layout_template" varchar DEFAULT NULL, "draft" boolean DEFAULT 'f', "link_url" varchar DEFAULT NULL, "ancestry" varchar DEFAULT NULL, "position" integer DEFAULT NULL, "materialized_path" varchar DEFAULT NULL, "active" boolean DEFAULT 't')[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aspina_pages" ("id","show_in_menu","slug","deletable","created_at","updated_at","name","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active")
+                     SELECT "id","show_in_menu","slug","deletable","created_at","updated_at","name","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","materialized_path","active" FROM "spina_pages"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "spina_pages"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "spina_pages" ("id" integer NOT NULL PRIMARY KEY, "show_in_menu" boolean DEFAULT 't', "slug" varchar DEFAULT NULL, "deletable" boolean DEFAULT 't', "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "name" varchar DEFAULT NULL, "skip_to_first_child" boolean DEFAULT 'f', "view_template" varchar DEFAULT NULL, "layout_template" varchar DEFAULT NULL, "draft" boolean DEFAULT 'f', "link_url" varchar DEFAULT NULL, "ancestry" varchar DEFAULT NULL, "position" integer DEFAULT NULL, "active" boolean DEFAULT 't')[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "spina_pages" ("id","show_in_menu","slug","deletable","created_at","updated_at","name","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","active")
+                     SELECT "id","show_in_menu","slug","deletable","created_at","updated_at","name","skip_to_first_child","view_template","layout_template","draft","link_url","ancestry","position","active" FROM "aspina_pages"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aspina_pages"[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180327134522"]]
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateSpinaOptions (20180327134523)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "spina_options" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180327134523"]]
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (1.9ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-03-28 04:28:10.394925"], ["updated_at", "2018-03-28 04:28:10.394925"]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_spina_line_translations_on_locale' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_spina_line_translations_on_locale' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_spina_line_translations_on_spina_line_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_spina_line_translations_on_spina_line_id' AND type='index'
+[0m
+  [1m[35m (0.3ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_spina_navigation_items_on_page_id_and_navigation_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_spina_navigation_items_on_page_id_and_navigation_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_spina_navigations_on_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_spina_navigations_on_name' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_spina_page_translations_on_locale' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_spina_page_translations_on_locale' AND type='index'
+[0m
+  [1m[35m (2.0ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_spina_page_translations_on_spina_page_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_spina_page_translations_on_spina_page_id' AND type='index'
+[0m
+  [1m[35m (0.6ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_spina_posts_on_author_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_spina_posts_on_author_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_spina_structure_items_on_structure_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_spina_structure_items_on_structure_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_spina_structure_parts_on_structure_partable_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_spina_structure_parts_on_structure_partable_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_spina_structure_parts_on_structure_item_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_spina_structure_parts_on_structure_item_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_spina_text_translations_on_locale' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_spina_text_translations_on_locale' AND type='index'
+[0m
+  [1m[35m (0.7ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_spina_text_translations_on_spina_text_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_spina_text_translations_on_spina_text_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "spina_posts"[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "published_at", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('MyString', 'MyText', '2018-03-28 00:10:25', 'f', '2018-03-28 04:28:24.980858', '2018-03-28 04:28:24.980858', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "published_at", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('MyString', 'MyText', '2018-03-28 00:10:25', 'f', '2018-03-28 04:28:24.980858', '2018-03-28 04:28:24.980858', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "spina_tags"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:28:24.984408', '2018-03-28 04:28:24.984408', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:28:24.984408', '2018-03-28 04:28:24.984408', 298486374)[0m
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------------
+Spina::PostsControllerTest: test_should_get_show
+------------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------
+Spina::PostsControllerTest: test_should_get_index
+-------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+Spina::PostTest: test_should_require_title
+------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------------------
+Spina::Admin::PostsControllerTest: test_should_get_new
+------------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------------------------------
+Spina::Admin::PostsControllerTest: test_should_get_index
+--------------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------------------
+Spina::Admin::PostsControllerTest: test_should_get_edit
+-------------------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+----------------------
+Blog::Test: test_truth
+----------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "spina_posts"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "published_at", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('MyString', 'MyText', '2018-03-28 00:10:25', 'f', '2018-03-28 04:28:47.097735', '2018-03-28 04:28:47.097735', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "published_at", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('MyString', 'MyText', '2018-03-28 00:10:25', 'f', '2018-03-28 04:28:47.097735', '2018-03-28 04:28:47.097735', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_tags"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:28:47.100663', '2018-03-28 04:28:47.100663', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:28:47.100663', '2018-03-28 04:28:47.100663', 298486374)[0m
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+Spina::PostTest: test_should_require_title
+------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "spina_accounts" ("created_at", "updated_at") VALUES (?, ?)[0m  [["created_at", "2018-03-28 04:31:56.442024"], ["updated_at", "2018-03-28 04:31:56.442024"]]
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mSpina::Account Load (0.3ms)[0m  [1m[34mSELECT  "spina_accounts".* FROM "spina_accounts" ORDER BY "spina_accounts"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "spina_posts"[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "published_at", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Test Post', 'Here is some text for the body.', '2018-03-28 00:10:25', 'f', '2018-03-28 04:32:58.977489', '2018-03-28 04:32:58.977489', 201799169, 1034934474)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Draft Post', 'Here is some text for the body.', 't', '2018-03-28 04:32:58.977489', '2018-03-28 04:32:58.977489', 108828309, 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_accounts"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_accounts" ("name", "email", "created_at", "updated_at", "id") VALUES ('Test Author', 'test@example.com', '2018-03-28 04:32:58.980697', '2018-03-28 04:32:58.980697', 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_tags"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:32:58.982647', '2018-03-28 04:32:58.982647', 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:32:58.982647', '2018-03-28 04:32:58.982647', 298486374)[0m
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+Spina::PostTest: test_should_require_title
+------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "posts"[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "spina_posts"[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "published_at", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Test Post', 'Here is some text for the body.', '2018-03-28 00:10:25', 'f', '2018-03-28 04:36:03.975509', '2018-03-28 04:36:03.975509', 201799169, 1034934474)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Draft Post', 'Here is some text for the body.', 't', '2018-03-28 04:36:03.975509', '2018-03-28 04:36:03.975509', 108828309, 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_accounts"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_accounts" ("name", "email", "created_at", "updated_at", "id") VALUES ('Test Author', 'test@example.com', '2018-03-28 04:36:03.978970', '2018-03-28 04:36:03.978970', 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_tags"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:36:03.981132', '2018-03-28 04:36:03.981132', 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:36:03.981132', '2018-03-28 04:36:03.981132', 298486374)[0m
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+Spina::PostTest: test_should_require_title
+------------------------------------------
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "spina_posts"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "published_at", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Test Post', 'Here is some text for the body.', '2018-03-28 00:10:25', 'f', '2018-03-28 04:36:54.329940', '2018-03-28 04:36:54.329940', 201799169, 1034934474)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Draft Post', 'Here is some text for the body.', 't', '2018-03-28 04:36:54.329940', '2018-03-28 04:36:54.329940', 108828309, 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_accounts"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_accounts" ("name", "email", "created_at", "updated_at", "id") VALUES ('Test Author', 'test@example.com', '2018-03-28 04:36:54.332816', '2018-03-28 04:36:54.332816', 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_tags"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:36:54.334762', '2018-03-28 04:36:54.334762', 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:36:54.334762', '2018-03-28 04:36:54.334762', 298486374)[0m
+  [1m[35m (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+Spina::PostTest: test_should_require_title
+------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "spina_posts"[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "published_at", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Test Post', 'Here is some text for the body.', '2018-03-28 00:10:25', 'f', '2018-03-28 04:37:03.468560', '2018-03-28 04:37:03.468560', 201799169, 1034934474)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Draft Post', 'Here is some text for the body.', 't', '2018-03-28 04:37:03.468560', '2018-03-28 04:37:03.468560', 108828309, 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_accounts"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_accounts" ("name", "email", "created_at", "updated_at", "id") VALUES ('Test Author', 'test@example.com', '2018-03-28 04:37:03.471505', '2018-03-28 04:37:03.471505', 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_tags"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:37:03.473455', '2018-03-28 04:37:03.473455', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:37:03.473455', '2018-03-28 04:37:03.473455', 298486374)[0m
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+Spina::PostTest: test_should_require_title
+------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "spina_posts"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "published_at", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Test Post', 'Here is some text for the body.', '2018-03-28 00:10:25', 'f', '2018-03-28 04:38:29.818292', '2018-03-28 04:38:29.818292', 201799169, 1034934474)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Draft Post', 'Here is some text for the body.', 't', '2018-03-28 04:38:29.818292', '2018-03-28 04:38:29.818292', 108828309, 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_accounts"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_accounts" ("name", "email", "created_at", "updated_at", "id") VALUES ('Test Author', 'test@example.com', '2018-03-28 04:38:29.821244', '2018-03-28 04:38:29.821244', 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_tags"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:38:29.823139', '2018-03-28 04:38:29.823139', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:38:29.823139', '2018-03-28 04:38:29.823139', 298486374)[0m
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+Spina::PostTest: test_should_require_title
+------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "spina_posts"[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "published_at", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Test Post', 'Here is some text for the body.', '2018-03-28 00:10:25', 'f', '2018-03-28 04:39:07.840697', '2018-03-28 04:39:07.840697', 201799169, 1034934474)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Draft Post', 'Here is some text for the body.', 't', '2018-03-28 04:39:07.840697', '2018-03-28 04:39:07.840697', 108828309, 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_accounts"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_accounts" ("name", "email", "created_at", "updated_at", "id") VALUES ('Test Author', 'test@example.com', '2018-03-28 04:39:07.843907', '2018-03-28 04:39:07.843907', 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_tags"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:39:07.845840', '2018-03-28 04:39:07.845840', 980190962)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:39:07.845840', '2018-03-28 04:39:07.845840', 298486374)[0m
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+Spina::PostTest: test_should_require_title
+------------------------------------------
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "posts"[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "posts"[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.2ms)[0m  [1m[31mDELETE FROM "posts"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "posts"[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "spina_posts"[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "published_at", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Test Post', 'Here is some text for the body.', '2018-03-28 00:10:25', 'f', '2018-03-28 04:44:41.347213', '2018-03-28 04:44:41.347213', 201799169, 1034934474)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Draft Post', 'Here is some text for the body.', 't', '2018-03-28 04:44:41.347213', '2018-03-28 04:44:41.347213', 108828309, 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_accounts"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_accounts" ("name", "email", "created_at", "updated_at", "id") VALUES ('Test Author', 'test@example.com', '2018-03-28 04:44:41.350180', '2018-03-28 04:44:41.350180', 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_tags"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:44:41.352111', '2018-03-28 04:44:41.352111', 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:44:41.352111', '2018-03-28 04:44:41.352111', 298486374)[0m
+  [1m[35m (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------
+Spina::PostTest: test_should_have_an_author
+-------------------------------------------
+  [1m[36mSpina::Post Load (0.3ms)[0m  [1m[34mSELECT  "spina_posts".* FROM "spina_posts" WHERE "spina_posts"."id" = ? LIMIT ?[0m  [["id", 201799169], ["LIMIT", 1]]
+  [1m[36mSpina::Account Load (0.2ms)[0m  [1m[34mSELECT  "spina_accounts".* FROM "spina_accounts" WHERE "spina_accounts"."id" = ? LIMIT ?[0m  [["id", 1034934474], ["LIMIT", 1]]
+  [1m[36mSpina::Account Load (0.1ms)[0m  [1m[34mSELECT  "spina_accounts".* FROM "spina_accounts" WHERE "spina_accounts"."id" = ? LIMIT ?[0m  [["id", 1034934474], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+Spina::PostTest: test_should_require_title
+------------------------------------------
+  [1m[36mSpina::Post Load (0.1ms)[0m  [1m[34mSELECT  "spina_posts".* FROM "spina_posts" WHERE "spina_posts"."id" = ? LIMIT ?[0m  [["id", 201799169], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "spina_posts"[0m
+  [1m[36mFixture Insert (0.2ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "published_at", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Test Post', 'Here is some text for the body.', '2018-03-28 00:10:25', 'f', '2018-03-28 04:44:57.326333', '2018-03-28 04:44:57.326333', 201799169, 1034934474)[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_posts" ("title", "body", "is_draft", "created_at", "updated_at", "id", "author_id") VALUES ('Draft Post', 'Here is some text for the body.', 't', '2018-03-28 04:44:57.326333', '2018-03-28 04:44:57.326333', 108828309, 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_accounts"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_accounts" ("name", "email", "created_at", "updated_at", "id") VALUES ('Test Author', 'test@example.com', '2018-03-28 04:44:57.329349', '2018-03-28 04:44:57.329349', 1034934474)[0m
+  [1m[36mFixture Delete (0.1ms)[0m  [1m[31mDELETE FROM "spina_tags"[0m
+  [1m[36mFixture Insert (0.1ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:44:57.331514', '2018-03-28 04:44:57.331514', 980190962)[0m
+  [1m[36mFixture Insert (0.0ms)[0m  [1m[32mINSERT INTO "spina_tags" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2018-03-28 04:44:57.331514', '2018-03-28 04:44:57.331514', 298486374)[0m
+  [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+-------------------------------------------
+Spina::PostTest: test_should_have_an_author
+-------------------------------------------
+  [1m[36mSpina::Post Load (0.2ms)[0m  [1m[34mSELECT  "spina_posts".* FROM "spina_posts" WHERE "spina_posts"."id" = ? LIMIT ?[0m  [["id", 201799169], ["LIMIT", 1]]
+  [1m[36mSpina::Account Load (0.2ms)[0m  [1m[34mSELECT  "spina_accounts".* FROM "spina_accounts" WHERE "spina_accounts"."id" = ? LIMIT ?[0m  [["id", 1034934474], ["LIMIT", 1]]
+  [1m[36mSpina::Account Load (0.1ms)[0m  [1m[34mSELECT  "spina_accounts".* FROM "spina_accounts" WHERE "spina_accounts"."id" = ? LIMIT ?[0m  [["id", 1034934474], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+Spina::PostTest: test_should_require_title
+------------------------------------------
+  [1m[36mSpina::Post Load (0.1ms)[0m  [1m[34mSELECT  "spina_posts".* FROM "spina_posts" WHERE "spina_posts"."id" = ? LIMIT ?[0m  [["id", 201799169], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m

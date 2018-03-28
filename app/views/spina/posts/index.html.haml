@@ -1,0 +1,12 @@
+%h1 This is an example page for posts
+
+%p You should create a new page <code>app/views/spina/posts/index.html.haml</code> to override this.
+
+- @posts.each do |post|
+  %article.post
+    %h2= post.title
+    %p.meta.author= post.author
+    %p.meta.date= post.published_at.to_s
+    %p.meta.tags= post.tags
+    = post.body
+  

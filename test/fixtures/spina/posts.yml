@@ -1,0 +1,14 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+valid:
+  title: Test Post
+  author: author
+  body: Here is some text for the body.
+  published_at: 2018-03-28 00:10:25
+  is_draft: false
+
+draft:
+  title: Draft Post
+  author: author
+  body: Here is some text for the body.
+  is_draft: true
