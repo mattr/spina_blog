@@ -1,0 +1,3 @@
+%li{ class: ('active' if current_admin_path.start_with?('/blog', '/posts')) }
+  = link_to spina.admin_blog_path do
+    = plugin.name
