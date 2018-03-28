@@ -1,0 +1,5 @@
+author:
+  name: Test Author
+  email: author@example.com
+  # password_digest: $2a$10$zHeFQY.aN4xjLqvJawfHJO1iW57C85IJfcmdARpo.KvWmYslydwJa
+  admin: true

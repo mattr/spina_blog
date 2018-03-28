@@ -15,6 +15,6 @@ class Spina::PostTest < ActiveSupport::TestCase
   end
 
   test "should have an author" do
-    assert_equal @post.author.name, spina_accounts(:author).name
+    assert_equal @post.author.name, spina_users(:author).name
   end
 end

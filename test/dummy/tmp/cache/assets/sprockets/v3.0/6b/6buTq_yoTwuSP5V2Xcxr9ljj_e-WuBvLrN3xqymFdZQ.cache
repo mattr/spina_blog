@@ -1,0 +1,47 @@
+I"È(function() {
+  Spina.InfiniteScroll = (function() {
+    function InfiniteScroll() {}
+
+    InfiniteScroll.init = function(link) {
+      var $link, url;
+      $(window).off('scroll.infiniteScroll');
+      $('#main, #overlay section').off('scroll.infiniteScroll');
+      $link = $(link);
+      if ((url = $link.find('a').attr('href'))) {
+        $(window).on('scroll.infiniteScroll', (function(_this) {
+          return function() {
+            return _this.loadNextPage($link);
+          };
+        })(this));
+        $('#main, #overlay section').on('scroll.infiniteScroll', function() {
+          return $(window).trigger('scroll.infiniteScroll');
+        });
+        return $(window).trigger('scroll.infiniteScroll');
+      }
+    };
+
+    InfiniteScroll.loadNextPage = function($link) {
+      if ($(window).scrollTop() > $link.offset().top - $(window).height() - 500) {
+        $(window).off('scroll.infiniteScroll');
+        $('#main, #overlay section').off('scroll.infiniteScroll');
+        $.rails.disableElement($link.find('a'));
+        return $.getScript($link.find('a').attr('href'));
+      }
+    };
+
+    return InfiniteScroll;
+
+  })();
+
+  $.fn.infiniteScroll = function() {
+    return Spina.InfiniteScroll.init(this);
+  };
+
+  $(document).on('turbolinks:load', function() {
+    $(window).off('scroll.infiniteScroll');
+    $('#main, #overlay section').off('scroll.infiniteScroll');
+    return $(document).find('.infinite-pagination').infiniteScroll();
+  });
+
+}).call(this);
+:ET
