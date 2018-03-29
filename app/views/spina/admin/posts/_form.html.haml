@@ -11,7 +11,7 @@
         %tr
           %td Published date
           %td
-            = f.text_field :publish_date, value: (@post.published_at.strftime("%d-%m-%Y") unless @post.new_record?), class: 'datepicker'
+            = f.text_field :publish_date, value: (@post.published_at.strftime("%Y-%m-%d") unless @post.new_record?), class: 'datepicker'
             = f.time_field :publish_time
         %tr
           %td Draft?

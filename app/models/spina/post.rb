@@ -22,8 +22,9 @@ class Spina::Post < ApplicationRecord
     if @publish_date.nil?
       self.published_at = DateTime.now
     else
+      days, months, years = @publish_date.split('-').map { |x| x.to_i }
       hours, minutes = (@publish_time || "00:00").split(':').map { |x| x.to_i }
-      self.published_at = DateTime.new(@publish_date.year, @publish_date.month, @publish_date.day, hours, minutes)
+      self.published_at = DateTime.new(years, months, days, hours, minutes)
     end
   end
 
@@ -31,7 +32,7 @@ class Spina::Post < ApplicationRecord
   # * Don't set if published_at is not set.
   def set_publish_date_and_time
     return unless self.published_at
-    @publish_date = self.published_at
+    @publish_date = self.published_at.strftime('%Y-%m-%d')
     @publish_time = self.published_at.strftime('%H:%M')
   end
 
