@@ -3,6 +3,10 @@ require 'test_helper'
 class Spina::Admin::PostsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @post = FactoryBot.create(:post)
+    @user = @post.author
+    @account = FactoryBot.create(:account)
+    @controller.stubs(:current_theme).return(@account.theme)
+    post spina.admin_sessions_url, params: { email: @user.email, password: @user.password }
   end
 
   test "should get index as blog" do

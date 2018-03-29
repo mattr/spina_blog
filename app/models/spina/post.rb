@@ -19,8 +19,8 @@ class Spina::Post < ApplicationRecord
   # Convert the list of tags into associated entries.
   def set_tags
     self.tags = []
-    @tag_list.split(',').each do |tag|
-      self.tags << Spina::Tag.find_or_create(name: tag.strip)
+    (@tag_list || "").split(',').each do |tag|
+      self.tags << Spina::Tag.find_or_create_by(name: tag.strip)
     end
   end
 

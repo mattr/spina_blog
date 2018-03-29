@@ -24,17 +24,15 @@ class Spina::PostTest < ActiveSupport::TestCase
     assert_not_nil created.published_at
     assert_not_nil found.publish_date
     assert_not_nil found.publish_time
-    assert_equal created.published_at.strftime('%Y-%m-%d'), found.publish_date.strftime('%Y-%m-%d')
+    assert_equal created.published_at.strftime('%Y-%m-%d'), found.publish_date
     assert_equal created.published_at.strftime('%H:%M'), found.publish_time
   end
 
   test "should set published_at from publish_date and publish_time" do
-    # create(:post)
-    date = DateTime.now
-    post = build(:post, { published_at: nil, publish_date: date, publish_time: "20:30" })
+    post = build(:post, { published_at: nil, publish_date: "2012-03-12", publish_time: "20:30" })
     assert post.valid?
     post.save
-    assert_equal post.published_at, DateTime.new(date.year, date.month, date.day, 20, 30)
+    assert_equal post.published_at, DateTime.new(2012, 3, 12, 20, 30)
   end
 
   test "should set published_at to current date and time if publish_date is not set and is_draft is false" do
@@ -58,6 +56,12 @@ class Spina::PostTest < ActiveSupport::TestCase
     assert_equal 4, post.materialized_path.split('/').length
     assert_equal post.title.parameterize, post.materialized_path.split('/').last
   end
+
+  # test "should create tags" do
+  #   post = create(:post, { tag_list: "one,two, three" })
+  #   assert_equal 3, post.tags.length
+  #   assert_not_nil Spina::Tag.find_by(name: "one")
+  # end
 
 
 end

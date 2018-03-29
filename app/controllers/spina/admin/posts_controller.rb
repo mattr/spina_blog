@@ -43,7 +43,7 @@ module Spina
       private
 
       def post_params
-        params.require(:post).permit(:title, :body, :publish_date, :publish_time, :is_draft)
+        params.require(:post).permit(:title, :body, :tag_list, :publish_date, :publish_time, :is_draft)
       end
 
       def set_breadcrumb
