@@ -21,7 +21,7 @@ module Spina
         @post = Post.new(post_params)
         @post.author = current_spina_user
         if @post.save
-          redirect_to admin_blog_path, notice: 'Post was successfully created.'
+          redirect_to admin_posts_path, notice: 'Post was successfully created.'
         else
           render :new
         end
@@ -29,7 +29,7 @@ module Spina
 
       def update
         if @post.update(post_params)
-          redirect_to admin_blog_path, notice: 'Post was successfully updated.'
+          redirect_to admin_posts_path, notice: 'Post was successfully updated.'
         else
           render :edit
         end
@@ -37,7 +37,7 @@ module Spina
 
       def destroy
         @post.destroy
-        redirect_to admin_blog_path, notice: 'Post was successfully destroyed.'
+        redirect_to admin_posts_path, notice: 'Post was successfully destroyed.'
       end
 
       private
@@ -47,7 +47,7 @@ module Spina
       end
 
       def set_breadcrumb
-        add_breadcrumb 'Posts', admin_blog_path
+        add_breadcrumb 'Posts', admin_posts_path
       end
 
       def set_post

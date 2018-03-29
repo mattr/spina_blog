@@ -1,5 +1,5 @@
 .filters
-  = link_to 'New post', spina.admin_post_path, class: 'button button-primary', data: {icon: 't'}
+  = link_to 'New post', spina.new_admin_post_path, class: 'button button-primary', data: {icon: 't'}
 
 .table-container
   %table.table
@@ -23,7 +23,7 @@
             %td.nowrap.align-right
               = link_to spina.edit_admin_post_path(post), class: 'button button-link' do
                 = icon('pencil-outline')
-              .pull-right= link_to 'Delete', admin_post_path(post), method: :delete, confirm: 'Are you sure?', class: 'button button-link button-danger'
+              -# .pull-right= link_to 'Delete', admin_post_path(post), method: :delete, confirm: 'Are you sure?', class: 'button button-link button-danger'
       - else
         %tr
           %td.align-center{colspan: 3}

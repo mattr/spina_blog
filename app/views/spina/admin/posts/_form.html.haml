@@ -20,7 +20,7 @@
     %button.button.button-primary{type: 'submit', data: {icon: 'o'}}
       Save
   
-    = link_to 'Cancel', admin_blog_path, class: 'button button-link'
+    = link_to 'Cancel', admin_posts_path, class: 'button button-link'
   
     - unless @post.new_record?
       .pull-right= link_to 'Delete', admin_post_path(@post), method: :delete, confirm: 'Are you sure?', class: 'button button-link button-danger'

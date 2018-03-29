@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    spina_blog (0.1.0)
+    spina_blog (0.2.0)
       rails (~> 5.1)
       spina
 
