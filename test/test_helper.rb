@@ -15,7 +15,7 @@ end
 
 # Rails.root is /test/dummy, and it looks inside here for the definitions, so we
 # need to backtrace to the test directory.
-FactoryBot.definition_file_paths << File.expand_path('../factories', __FILE__)
+FactoryBot.definition_file_paths = [File.expand_path('../factories', __FILE__)]
 FactoryBot.find_definitions
 
 

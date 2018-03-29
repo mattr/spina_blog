@@ -5,7 +5,10 @@ Spina::Engine.routes.draw do
   end
   scope 'blog' do
     get '/', to: "posts#index", as: "blog_root"
-    get '/:year(/:month(/:day))', to: "posts#index", as: "blog_archive"
-    get '/:year/:month/:day/:id', to: "posts#show", as: "blog_post"
+    # TODO: Add archive paths for year/month/day
+    # get '/:year(/:month(/:day))', to: "posts#index", as: "blog_archive"
+    # get '/:year/:month/:day/:id', to: "posts#show", as: "blog_post"
+    # Use materialized path for blog path definitions instead.
+    get '/*id', to: "posts#show", as: "blog_post"
   end
 end
