@@ -1,17 +1,32 @@
 class Spina::Post < ApplicationRecord
   belongs_to :author, class_name: 'Spina::User', foreign_key: 'author_id'
   has_and_belongs_to_many :tags
+
+  scope :published, -> { where(is_draft: false) }
+  scope :drafts, -> { where(is_draft: true) }
   
-  before_save :set_published_at, :set_materialized_path
-  after_find :set_publish_date_and_time
+  before_save :set_published_at, :set_materialized_path, :set_tags
+  after_find :set_publish_date_and_time, :load_tags
 
-  attr_accessor :publish_date, :publish_time
+  attr_accessor :publish_date, :publish_time, :tag_list
 
-  def to_param
-    self.materialized_path
-  end
+  # def to_param
+  #   self.materialized_path
+  # end
 
   private
+
+  # Convert the list of tags into associated entries.
+  def set_tags
+    self.tags = []
+    @tag_list.split(',').each do |tag|
+      self.tags << Spina::Tag.find_or_create(name: tag.strip)
+    end
+  end
+
+  def load_tags
+    @tag_list = self.tags.map { |t| t.name }.join(', ')
+  end
 
   # Sets the publish date for the post.
   # * Don't set publish_at if the post is a draft.
@@ -22,7 +37,7 @@ class Spina::Post < ApplicationRecord
     if @publish_date.nil?
       self.published_at = DateTime.now
     else
-      days, months, years = @publish_date.split('-').map { |x| x.to_i }
+      years, months, days = @publish_date.split('-').map { |x| x.to_i }
       hours, minutes = (@publish_time || "00:00").split(':').map { |x| x.to_i }
       self.published_at = DateTime.new(years, months, days, hours, minutes)
     end

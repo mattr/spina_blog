@@ -6,16 +6,21 @@
           %td Title
           %td= f.text_field :title
         %tr
+          %td 
+            Tags
+            %span.help-text Separate tags with ','
+          %td= f.text_field :tag_list
+        %tr
           %td Body
           %td= render '/spina/admin/shared/rich_text_field', f: f, field: :body
         %tr
           %td Published date
           %td
-            = f.text_field :publish_date, value: (@post.published_at.strftime("%Y-%m-%d") unless @post.new_record?), class: 'datepicker'
-            = f.time_field :publish_time
+            = f.text_field :publish_date, value: (@post.published_at.strftime("%Y-%m-%d") unless @post.new_record? || @post.is_draft?), class: 'datepicker'
+            = f.time_field :publish_time, value: (@post.published_at.strftime('%H:%M') unless @post.new_record? || @post.is_draft?)
         %tr
           %td Draft?
-          %td= = f.check_box :is_draft
+          %td= f.check_box :is_draft
 
     %button.button.button-primary{type: 'submit', data: {icon: 'o'}}
       Save

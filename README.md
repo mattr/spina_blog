@@ -10,7 +10,7 @@ This will add an extra section to the 'website' navigation.
 
 ### Justification
 
-While blog posts are essentially just pages, they usually have a separate structure for date information. Rather than creating a bunch of pages, this plugin creates a scope called `blog` for the front-end, under which all the posts reside (using the standard `/:year/:month/:day/:id` format -- `:id` is actually the slug).
+While blog posts are essentially just pages, they usually have a separate structure for date information. Rather than creating a bunch of pages, this plugin creates a scope called `blog` for the front-end, under which all the posts reside (using the standard `/:year/:month/:day/:slug` format).
 
 ## Installation
 
