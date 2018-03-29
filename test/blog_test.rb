@@ -1,7 +1,7 @@
 require 'test_helper'
 
-class Blog::Test < ActiveSupport::TestCase
+class SpinaBlog::Test < ActiveSupport::TestCase
   test "truth" do
-    assert_kind_of Module, Blog
+    assert_kind_of Module, SpinaBlog
   end
 end

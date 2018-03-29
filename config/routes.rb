@@ -2,7 +2,7 @@ Spina::Engine.routes.draw do
   namespace :admin, path: Spina.config.backend_path do
     # resources :posts, except: [:index, :show]
     resources :posts, except: [:show]
-    # get '/blog', to: "posts#index", as: "blog"
+    get '/blog', to: "posts#index", as: "blog"
   end
   # scope 'blog' do
   #   get '/', to: "posts#index", as: "blog_root"
