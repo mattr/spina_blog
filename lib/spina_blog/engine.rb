@@ -1,7 +1,7 @@
 require 'spina'
-module Blog
+module SpinaBlog
   class Engine < ::Rails::Engine
-    initializer 'spina.plugin.register.blog', before: :load_config_initializers do
+    initializer 'spina.plugin.register.spina_blog', before: :load_config_initializers do
       ::Spina::Plugin.register do |plugin|
         plugin.name       = 'Blog'
         plugin.namespace  = 'blog'

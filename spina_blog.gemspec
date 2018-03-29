@@ -6,7 +6,7 @@ require "blog/version"
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "spina_blog"
-  s.version     = Blog::VERSION
+  s.version     = SpinaBlog::VERSION
   s.authors     = ["Matt Redmond"]
   s.email       = ["signs.of.antilife@gmail.com"]
   s.homepage    = "http://spinacms.com"
