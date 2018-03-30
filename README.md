@@ -15,12 +15,10 @@ While blog posts are essentially just pages, they usually have a separate struct
 ## Installation
 
 Add this line to your application's Gemfile:
-
 ```ruby
-gem 'spina_blog', github: 'mattr/spina_blog', require: 'blog'
+gem 'spina', '~> 0.12'
+gem 'spina_blog', github: 'mattr/spina_blog'
 ```
-
-Since the module is actually called `blog` it needs to be explicitly required. This may change in future.
 
 And then execute:
 ```bash
