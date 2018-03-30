@@ -2,7 +2,7 @@ class Spina::Post < ApplicationRecord
   belongs_to :author, class_name: 'Spina::User', foreign_key: 'author_id'
   has_and_belongs_to_many :tags
 
-  scope :published, -> { where(is_draft: false) }
+  scope :published, -> { where(is_draft: false).order(published_at: :desc) }
   scope :drafts, -> { where(is_draft: true) }
   
   before_save :set_published_at, :set_materialized_path, :set_tags

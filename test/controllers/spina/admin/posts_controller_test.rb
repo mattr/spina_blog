@@ -42,7 +42,8 @@ class Spina::Admin::PostsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update post" do
     @post.title = "New title"
-    patch spina.admin_post_url(@post), params: { id: @post.id, post: @post.attributes }
+    # patch spina.admin_post_url(@post), params: { id: @post.id, post: @post.attributes }
+    patch spina.admin_post_url(@post), params: { post: @post.attributes }
     assert_response :redirect
     assert_redirected_to spina.admin_blog_url
     follow_redirect!
