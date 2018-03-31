@@ -1,4 +1,5 @@
 # Spina::Blog
+[![Build Status](https://travis-ci.org/mattr/spina_blog.svg?branch=master)](https://travis-ci.org/mattr/spina_blog)
 
 Blog module to add to Spina CMS.
 
