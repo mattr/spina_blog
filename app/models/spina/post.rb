@@ -1,18 +1,19 @@
+# Spina::Post represents a blog post on the site.
 class Spina::Post < ApplicationRecord
   belongs_to :author, class_name: 'Spina::User', foreign_key: 'author_id'
   has_and_belongs_to_many :tags
 
+  # Published posts only (for front-end). Reverse order, since that's what we
+  # need in the majority of cases.
   scope :published, -> { where(is_draft: false).order(published_at: :desc) }
+  # Drafts for the admin section and previewing.
   scope :drafts, -> { where(is_draft: true) }
   
   before_save :set_published_at, :set_materialized_path, :set_tags
   after_find :set_publish_date_and_time, :load_tags
 
+  # Use temporary fields for the form data.
   attr_accessor :publish_date, :publish_time, :tag_list
-
-  # def to_param
-  #   self.materialized_path
-  # end
 
   private
 
