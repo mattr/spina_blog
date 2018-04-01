@@ -7,7 +7,7 @@ module Spina
       layout 'spina/admin/admin'
 
       def index
-        @posts = Post.all
+        @posts = Post.group_by(:namespace).all
       end
 
       def new

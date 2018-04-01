@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180328234421) do
+ActiveRecord::Schema.define(version: 20180331154355) do
 
   create_table "spina_accounts", force: :cascade do |t|
     t.string "name"
@@ -40,6 +40,12 @@ ActiveRecord::Schema.define(version: 20180328234421) do
 
   create_table "spina_attachments", force: :cascade do |t|
     t.string "file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "spina_blogs", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -162,6 +168,7 @@ ActiveRecord::Schema.define(version: 20180328234421) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "materialized_path"
+    t.integer "blog_id"
     t.index ["author_id"], name: "index_spina_posts_on_author_id"
   end
 

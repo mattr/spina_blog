@@ -1,5 +1,8 @@
 require "spina_blog/engine"
+require "spina_blog/blog"
 
 module SpinaBlog
-  # Your code goes here...
+  include ActiveSupport::Configurable
+
+  BLOGS = []
 end
