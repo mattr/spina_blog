@@ -11,7 +11,11 @@ This will add an extra section to the 'website' navigation.
 
 ### Justification
 
-While blog posts are essentially just pages, they usually have a separate structure for date information. Rather than creating a bunch of pages, this plugin creates a scope called `blog` for the front-end, under which all the posts reside (using the standard `/:year/:month/:day/:slug` format).
+While blog posts are basically just pages, they are frequently date oriented. As such, maintaing a URL structure for them can quickly become tedious if manually creating the
+containing pages. Of course, there's no reason you can't just do this with custom pages in Spina.
+
+This solution allows you to define date-based pages within a namespace (e.g. `/news` or `/blog`).
+
 
 ## Installation
 
@@ -25,6 +29,17 @@ And then execute:
 ```bash
 $ bundle
 ```
+
+There is a generator `spina_blog:install` which will set up the `spina_blog.rb` initalizer and copy the migrations. The initializer will allow you to register the namespace (or namespaces) you wish to use for blogging. For example, to register a `blog` section, you would have:
+```ruby
+# config/initializer/spina_blog.rb
+::SpinaBlog::Blog.register do |blog|
+  blog.name = "Blog"
+  blog.namespace = "blog"
+end
+```
+
+This will hijack any routes beginning with `/blog` on your site. If you are using Spina's navigation generation, you can create a regular page whose materialized path will be the same as the namespace. Due to the route hijacking, the content for this page will never be seen, instead directing to the root of your blog.
 
 ## Contributing
 1. Fork it ( https://github.com/mattr/spina_blog/fork )
