@@ -6,5 +6,6 @@ FactoryBot.define do
     publish_date "2018-07-23"
     publish_time "20:30"
     is_draft false
+    namespace 'blog'
   end
 end 

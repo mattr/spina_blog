@@ -6,7 +6,7 @@ class Spina::PostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get spina.blog_root_url
+    get spina.blog_root_url, params: { namespace: 'blog' }
     assert_response :success
   end
 
