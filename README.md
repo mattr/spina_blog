@@ -56,6 +56,7 @@ The gem is available as open source under the terms of the [MIT License](http://
 
 ## TODO
 
-1. Move the URL generation to use `materialized_path`.
-2. Add configuration options to allow alternate namespaces (e.g. `news`).
-3. Allow multiple instances (e.g. `news` and `blog`).
+1. <strike>Move the URL generation to use `materialized_path`.</strike>
+2. <strike>Add configuration options to allow alternate namespaces (e.g. `news`).</strike>
+3. <strike>Allow multiple instances (e.g. `news` and `blog`).</strike>
+4. Move post content to corresponding Spina data types (i.e. spina_blog becomes a wrapper and custom routing for specific page types).

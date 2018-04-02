@@ -5,4 +5,5 @@ module SpinaBlog
   include ActiveSupport::Configurable
 
   BLOGS = []
+  NAMESPACES = []
 end

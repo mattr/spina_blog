@@ -7,11 +7,17 @@ module Spina
       layout 'spina/admin/admin'
 
       def index
-        @posts = Post.group_by(:namespace).all
+        @posts = {}
+        if ::SpinaBlog::Blog.namespaces.any?
+          ::SpinaBlog::Blog.namespaces.each do |ns|
+            @posts[ns] = Post.where(namespace: ns).order(id: :desc).all
+          end
+        else
+          @posts['default'] = Post.order(id: :desc).all
       end
 
       def new
-        @post = Post.new
+        @post = Post.new(namespace: params[:namespace])
       end
 
       def edit
@@ -43,7 +49,7 @@ module Spina
       private
 
       def post_params
-        params.require(:post).permit(:title, :body, :tag_list, :publish_date, :publish_time, :is_draft)
+        params.require(:post).permit(:title, :body, :tag_list, :publish_date, :publish_time, :is_draft, :namespace)
       end
 
       def set_breadcrumb
