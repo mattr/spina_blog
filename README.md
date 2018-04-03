@@ -41,6 +41,8 @@ The gem is available as open source under the terms of the [MIT License](http://
 
 ## TODO
 
-1. Move the URL generation to use `materialized_path`.
-2. Add configuration options to allow alternate namespaces (e.g. `news`).
-3. Allow multiple instances (e.g. `news` and `blog`).
+1. <strike>Move the URL generation to use `materialized_path`.</strike>
+2. Add configuration options to allow alternate namespaces (e.g. `news`). (See branch: feature/namespaced-blogs)
+3. Allow multiple instances (e.g. `news` and `blog`). (See branch: feature/namespaced-blogs)
+4. Move field definitions to spina content types (i.e. spina_blog becomes a wrapper and custom routing module)
+5. Extract `published_at` and `tags` to separate content type gems (`spina_datetime` and `spina_tags` respectively)
